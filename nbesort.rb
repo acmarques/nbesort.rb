@@ -7,14 +7,17 @@
 		a nice and pretty console output. Should be easier to
 		create reports this way!
 @Usage	:	ruby nbesort.rb <nessus nbe output>
+@Notes	:	January 31, 2011
+		Tenable updated NBE format. nbesort has been updated to
+		accomodate these changes.
 """
 
 # todo: msf search (msfsearch.rb)
 
 puts """
-  ___________ 
- < nbeparse2 >
-  ----------- 
+  ____________ 
+ < nbesort 0.2 >
+  ------------
         \\   ^__^
          \\  (oo)\\
             (__)\\
@@ -37,7 +40,10 @@ f.each_with_index do |line, index|
 		# regex out IP, finding synopsis
 		host = line.scan(/results\|[^\|]+/)[0]
 		if host
-			host = host[8..host.size].strip
+			p1 = line.index("|")
+			p2 = line[(p1 + 1)..line.size].index("|") + p1 + 1
+			p3 = line[(p2 + 1)..line.size].index("|") + p2 + 1
+			host = line[p2 + 1..p3 - 1]
 			host = host + ' -- ' + line.scan(/\d+\/tcp/)[0] if line.scan(/\d+\/tcp/)[0]
 		end
 		if line.include?('Synopsis :') then		
