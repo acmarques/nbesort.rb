@@ -42,7 +42,7 @@ f.each_with_index do |line, index|
 			description = line.scan(/Description :\\n\\n([^\\]+)(\\n)*([^\"]*)\\n\\n/)[0] 
 			
 			risk_factor = line.scan(/Risk factor :\\n\\n([^\\]+)/)[0]
-			risk_factor = risk_factor.first if RUBY_VERSION.include? "1.9"
+			risk_factor = risk_factor.first
 			
 			title.push("Description: #{description.join.gsub("\\n", " ") if description}") 
 			title.push("\nRisk: #{risk_factor}\n\n") 
